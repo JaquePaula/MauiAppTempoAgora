@@ -29,7 +29,10 @@ namespace MauiAppTempoAgora
 														 $"Nascer do Sol: {t.sunrise} \n" +
 														 $"Por do Sol: {t.sunset} \n" +
 														 $"Temp Máx: {t.temp_max} \n" +
-														 $"Temp Min: {t.temp_min} \n";
+														 $"Temp Min: {t.temp_min} \n" +
+														 $"Descrição: {t.description} \n" +
+														 $"Visibilidade: {t.visibility} \n" +
+														 $"Velocidade do vento: {t.speed} \n";
 
 						lbl_res.Text = dados_previsao;
 
@@ -47,11 +50,18 @@ namespace MauiAppTempoAgora
 				}
 
 			}
+			catch (HttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+			{
+				await DisplayAlert("Aviso", "Cidade não foi encontrada. Verifique o nome.", "OK");
+			}
+			catch (HttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.RequestTimeout || ex.StatusCode == System.Net.HttpStatusCode.ServiceUnavailable)
+			{
+				await DisplayAlert("Erro de conexão", "Verifique sua conexão com a internet.", "OK");
+			}
 			catch (Exception ex)
 			{
 				await DisplayAlert("Ops", ex.Message, "OK");
 			}
 		}
 	}
-
 }
