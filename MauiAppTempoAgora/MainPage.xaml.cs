@@ -39,10 +39,8 @@ namespace MauiAppTempoAgora
 					}
 					else
 					{
-
-						lbl_res.Text = "Sem dados de Previsão";
+						await DisplayAlert("Aviso", "Cidade não encontrada. Verifique o nome digitado.", "OK");
 					}
-
 				}
 				else
 				{
